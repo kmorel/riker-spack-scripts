@@ -1,0 +1,4 @@
+spack-build
+spack-install
+*.pvsc
+*.log
