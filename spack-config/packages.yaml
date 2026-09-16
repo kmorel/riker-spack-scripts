@@ -1,0 +1,166 @@
+# See /sw/riker/spack/configs/env26.01/packages.yaml for system spack config.
+
+packages:
+  all:
+    prefer:
+    - +mpi
+    require:
+    - ~rocm
+    - spec: cuda_arch=89 cflags="-L/sw/riker/cuda/12.9.1/lib64/stubs" ldflags="-L/sw/riker/cuda/12.9.1/lib64/stubs"
+      when: +cuda
+    - &cuda-settings
+      spec: >-
+        cuda_arch=89
+        cflags="-L/sw/riker/cuda/12.9.1/lib64/stubs"
+        ldflags="-L/sw/riker/cuda/12.9.1/lib64/stubs"
+      when: +cuda
+
+  paraview:
+    require:
+    - ~qt
+    - +mpi
+    - +python
+    - +adios2
+    - +fides
+    - +visitbridge
+    - +cuda
+    - *cuda-settings
+    - ^[virtuals=gl] osmesa
+
+  viskores:
+    require:
+    - +cuda
+    - *cuda-settings
+
+  adios2:
+    require:
+    - "@master"
+    - +campaign
+    - +encryption
+    - +mpi
+    - +blosc2
+    - +bzip2
+    - +mgard
+    - +sz
+    - +sz3
+    - +zfp
+    - +cuda
+    - *cuda-settings
+
+  mgard:
+    require:
+    - "@git.master=develop"
+    - +cuda
+    - *cuda-settings
+
+  gcc:
+    externals:
+    - spec: gcc@14.2.0 languages:='c,c++,fortran'
+      prefix: /sw/riker/gcc/14.2.0
+      modules:
+      - gcc/14.2.0
+      extra_attributes:
+        compilers:
+          c: /sw/riker/gcc/14.2.0/bin/gcc
+          cxx: /sw/riker/gcc/14.2.0/bin/g++
+          fortran: /sw/riker/gcc/14.2.0/bin/gfortran
+    buildable: false
+
+  cuda:
+    externals:
+    - spec: cuda@12.9.1
+      prefix: /sw/riker/cuda/12.9.1
+      modules:
+      - cuda/12.9.1
+    buildable: false
+
+  llvm:
+    buildable: true # Allow llvm@16 builds for Julia, Mesa
+    externals:
+    - spec: llvm@21.1.8 +clang+flang+lld compiler-rt=project libcxx=runtime libunwind=runtime openmp=project
+      prefix: /sw/riker/llvm/21.1.8
+      extra_attributes:
+        compilers:
+          c: /sw/riker/llvm/21.1.8/bin/clang
+          cxx: /sw/riker/llvm/21.1.8/bin/clang++
+          fortran: /sw/riker/llvm/21.1.8/bin/flang
+
+  intel-oneapi-compilers:
+    buildable: false
+    externals:
+    - spec: intel-oneapi-compilers@2025.2.1
+      prefix: /sw/riker/oneapi/2025.2.1
+      extra_attributes:
+        compilers:
+          c: /sw/riker/oneapi/2025.2.1/2025.2/bin/icx
+          cxx: /sw/riker/oneapi/2025.2.1/2025.2/bin/icpx
+          fortran: /sw/riker/oneapi/2025.2.1/2025.2/bin/ifx
+
+  aocc:
+    buildable: false
+    externals:
+    - spec: aocc@5.1.0
+      prefix: /sw/riker/aocc/5.1.0
+      extra_attributes:
+        compilers:
+          c: /sw/riker/aocc/5.1.0/bin/clang
+          cxx: /sw/riker/aocc/5.1.0/bin/clang++
+          fortran: /sw/riker/aocc/5.1.0/bin/flang
+
+  opengl:
+    buildable: false
+    externals:
+    - spec: opengl@4.5
+      prefix: /usr
+
+  slurm:
+    buildable: false
+    externals:
+    - spec: slurm@25.11.1
+      prefix: /usr
+
+  cmake:
+    externals:
+    - spec: cmake@3.31.11
+      prefix: /sw/riker/spack/envs/env26.01/opt/gcc-11.5.0/cmake-3.31.11-hgfopk6ed4gmtj7uzkfbrfijzqcbbpnb
+      modules:
+      - cmake/3.31.11
+    buildable: false
+
+  # mpich:
+  #   externals:
+  #   - spec: mpich@5.0.1
+  #     prefix: /sw/riker/spack/envs/env26.01/opt/gcc-14.2.0/mpich-5.0.1-77og75zxxufr2457laev3jwswmudqjgk
+  #     modules:
+  #     - gcc/14.2.0
+  #     - mpich/5.0.1
+  #   buildable: false
+
+  mpi:
+    require:
+    - mpich
+
+  mpich:
+    require:
+    - spec: +fortran +slurm ~hydra +verbs device:=ch4 netmod=ucx
+      when: ~cuda
+    - spec: +fortran +slurm ~hydra +verbs device:=ch4 netmod=ucx cuda_arch=89 cflags="-L/sw/riker/cuda/12.9.1/lib64/stubs" ldflags="-L/sw/riker/cuda/12.9.1/lib64/stubs" ^ucx+cuda
+      when: +cuda
+
+  mpifileutils:
+    require:
+    - spec: cflags='-Wno-error=implicit-function-declaration'
+      when: "%gcc@14:"
+
+  hdf5:
+    require: 
+    - +fortran
+    - +cxx 
+    - +hl
+
+  openblas:
+    require:
+    - threads=openmp
+
+  cairo:
+    require: +X
