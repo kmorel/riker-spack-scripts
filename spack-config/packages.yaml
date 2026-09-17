@@ -125,6 +125,7 @@ packages:
     - spec: cmake@3.31.11
       prefix: /sw/riker/spack/envs/env26.01/opt/gcc-11.5.0/cmake-3.31.11-hgfopk6ed4gmtj7uzkfbrfijzqcbbpnb
       modules:
+      - Core/26.01
       - cmake/3.31.11
     buildable: false
 
