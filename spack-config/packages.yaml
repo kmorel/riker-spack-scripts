@@ -44,6 +44,7 @@ packages:
     - +sz
     - +sz3
     - +zfp
+    - +python
     - +cuda
     - *cuda-settings
 
