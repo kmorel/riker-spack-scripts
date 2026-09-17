@@ -17,7 +17,7 @@ export SPACK_USER_CONFIG_PATH=$myspack_base_dir/spack-config
 
 # Make sure build directory is configured.
 mybuild_dir=$myspack_base_dir/spack-build
-if [ \! -d mybuild_dir -a \! -L mybuild_dir ] ; then
+if [ \! -d $mybuild_dir -a \! -L $mybuild_dir ] ; then
   ln -s `spack location --stages` $mybuild_dir
 fi
 unset mybuild_dir
