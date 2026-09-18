@@ -13,6 +13,33 @@ git submodule update --init
 To set up and load the Spack environment, simply source the
 `setup-spack.sh` script.
 
-``` sh
+```bash
 . ./setup-spack.sh
 ```
+
+## Building and Installing ParaView
+
+You can use the `make-paraview.sh` to build ParaView. Consider first editing the
+script to select the version of ParaView you want. Then run the script to build
+ParaView. This will take many hours, so consider launching the build in the
+background with `nohup`.
+
+```bash
+nohup ./make-paraview.sh > build.log &
+tail -f build.log
+```
+
+Many things can go wrong with the build. If the build fails, run it again to see
+if it progresses further before debugging. Intermittent failures with limited
+resources or the non-POSIX-compliant file system can be resolved by just
+restartting.
+
+The `make-paraview.sh` script creates a Spack environment named `paraview`
+containing the built paraview package and all its dependencies. To ensure you
+get packages that match the ParaView build, you can activate this environment.
+
+```bash
+spack env activate paraview
+```
+
+Or simply call `spacktivate paraview`.
