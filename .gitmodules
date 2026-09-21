@@ -4,3 +4,6 @@
 [submodule "spack-packages"]
 	path = spack-packages
 	url = https://github.com/kmorel/spack-packages.git
+[submodule "pvsc"]
+	path = pvsc
+	url = https://gitlab.kitware.com/kmorel/pvsc.git
