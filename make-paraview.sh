@@ -4,6 +4,9 @@ set -e
 
 module purge
 
+module load Core/26.01 git-lfs
+git lfs install
+
 pv_version=6.2.0
 
 scriptdir=$(dirname $(realpath $0))
