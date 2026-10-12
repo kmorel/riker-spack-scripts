@@ -23,14 +23,16 @@ packages:
     - +adios2
     - +fides
     - +visitbridge
-    - +cuda
-    - *cuda-settings
+    - ~cuda
     - ^[virtuals=gl] osmesa
+    # - +cuda
+    # - *cuda-settings
 
   viskores:
     require:
-    - +cuda
-    - *cuda-settings
+    - ~cuda
+    # - +cuda
+    # - *cuda-settings
 
   adios2:
     require:
