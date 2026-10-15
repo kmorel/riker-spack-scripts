@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Building on `hostname`"
+
 set -e
 
 module purge
@@ -29,9 +31,10 @@ spack install git git-lfs
 spack load git git-lfs
 git lfs install
 
+echo "Building/installing ParaView"
 spack install
 
-# Make a custom server configuration that points to this build.
+echo "Making custom server configuration that points to this build"
 
 # This works best if this build directory has the date in it.
 build_name=riker-$(basename $scriptdir)-$pv_version
@@ -41,3 +44,5 @@ pvsc_file=$scriptdir/$build_name.pvsc
 cp -f $scriptdir/pvsc/ORNL/ORNL-riker.pvsc $pvsc_file
 sed -i "s/ORNL riker (OLCF Official)/$build_name/" $pvsc_file
 sed -i "s|/sw/riker/paraview/pvsc|$scriptdir/pvsc|" $pvsc_file
+
+echo "Done!"
