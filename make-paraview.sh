@@ -4,9 +4,6 @@ set -e
 
 module purge
 
-module load Core/26.01 git-lfs
-git lfs install
-
 pv_version=6.2.0
 
 scriptdir=$(dirname $(realpath $0))
@@ -25,6 +22,13 @@ fi
 
 spack add paraview@$pv_version
 spack concretize
+
+echo "Setting up git-lfs (required for Fides checkout)"
+spack add git git-lfs
+spack install git git-lfs
+spack load git git-lfs
+git lfs install
+
 spack install
 
 # Make a custom server configuration that points to this build.

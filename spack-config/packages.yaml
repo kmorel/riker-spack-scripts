@@ -131,6 +131,24 @@ packages:
       - cmake/3.31.11
     buildable: false
 
+  git:
+    externals:
+    - spec: git@2.53.0
+      prefix: /sw/riker/spack/envs/env26.01/opt/gcc-11.5.0/git-2.53.0-62gc3gseutpizxpac6tcnosgi3pmywn2
+      modules:
+      - Core/26.01
+      - git/2.53.0
+    buildable: false
+
+  git-lfs:
+    externals:
+    - spec: git-lfs@3.7.1
+      prefix: /sw/riker/spack/envs/env26.01/opt/none-none/git-lfs-3.7.1-p7lztxvzhipw6ek7rdrpmz4v77xyxbd5
+      modules:
+      - Core/26.01
+      - git-lfs/3.7.1
+    buildable: false
+
   # mpich:
   #   externals:
   #   - spec: mpich@5.0.1
