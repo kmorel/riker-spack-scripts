@@ -1,4 +1,5 @@
 spack-build
 spack-install
+adios-plugin
 *.pvsc
 *.log
