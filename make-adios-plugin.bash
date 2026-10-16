@@ -13,6 +13,13 @@ spack load cmake ninja mgard adios2
 plugin_dir=${scriptdir}/adios-plugin
 mkdir -p ${plugin_dir}
 
+core_operators_dir=${plugin_dir}/core-operators
+if [ ! -d ${core_operators_dir} ] ; then
+  bpls=$(which bpls)
+  bpls_dir=$(dirname ${bpls})
+  ln -s $(realpath ${bpls_dir}/../lib64) ${core_operators_dir}
+fi
+
 centroid_operator_dir=${plugin_dir}/CompressMGARDCentroidOperator
 if [ ! -d ${centroid_operator_dir} ] ; then
   # cd ${plugin_dir}
